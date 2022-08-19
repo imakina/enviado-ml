@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { parseGrant } from '../../../../helper/Helpers';
 
 type Data = {
   jwt: {}
@@ -9,15 +10,11 @@ export default function handler(
   res: NextApiResponse
 ) {
     try {
+    
         const { code } = req.query;
 
-        let grant: string = (typeof(code) == "string")?code:"";
+        let body = builderBody(parseGrant(code));
 
-        let body = builderBody(grant);
-
-        // res.status(200).json({jwt : body})
-
-        debugger;
         fetch('https://api.mercadolibre.com/oauth/token', {
             method: 'POST',
             headers: {
@@ -28,7 +25,12 @@ export default function handler(
 
         })
         .then((result) => result.json())
-        .then((json) => res.status(200).json(json))
+        .then((json) => {
+            if (json.access_token)
+                res.status(200).json(json);
+            else
+                res.status(400).json(json.message)
+        })
         .catch((err) => res.status(500).json(err))
 
     } catch (e) {
@@ -43,7 +45,7 @@ function builderBody(code:string): string {
     map.set('client_id', '5342048874344752');
     map.set('grant_type', 'authorization_code');
     map.set('code', code);
-    map.set('redirect_uri', 'http://localhost:3000/addproduct');
+    map.set('redirect_uri', 'http://localhost:3000/mercadolibre');
 
     let formBody:string[] = [];
     map.forEach((e:string, key:string) => {

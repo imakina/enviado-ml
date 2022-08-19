@@ -1,10 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+}
+
+a,
+button {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 16px;
 }
 
 a {
@@ -31,11 +39,11 @@ a {
   border-bottom: 1px solid #e3e3e3;
   grid-template-columns: 1fr 1fr;
 }
-/*
+
 .header .image {
-  display: grid;
-  grid-column: 1/1;
+  height: 60px;
 }
+/*
 
 */
 /* .header .user {
@@ -64,24 +72,72 @@ a {
 /* LOGIn */
 
 .login,
-.addproduct {
+.addproduct,
+.mercadolibre {
   display: grid;
-  height: 100vh;
+  height: 95vh;
   align-content: center;
   justify-content: center;
 }
 
-.login .form,
-.addproduct .form {
+.mercadolibre {
+  /* column-gap: 20px; */
+  grid-template-columns: 1fr 1fr;
+}
+
+.mercadolibre .menu {
   display: grid;
-  grid-template-rows: repeat(7, 1fr);
+  align-content: center;
+  justify-content: end;
+  background-color: #fff159;
+  padding-right: 40px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.mercadolibre .options {
+  display: grid;
+  align-content: center;
+  justify-content: start;
+  padding-left: 40px;
+  width: 100%;
+}
+
+.form {
+  display: grid;
+  grid-template-rows: auto;
   width: 400px;
 }
 
-.login .form input,
-.addproduct .form input {
+.form input {
   padding: 10px;
+  border: 0.5px solid #c3c3c3;
+}
+
+.form input,
+.form button,
+.status > button {
   margin-bottom: 10px;
+  height: 50px;
+}
+
+.form button {
+  cursor: pointer;
+  border: 2px solid black;
+  background-color: white;
+  /* padding: 14px 28px; */
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.form button {
+  border-color: #04AA6D;
+  color: green;
+}
+
+.form button:hover {
+  background-color: #04AA6D;
+  color: white;
 }
 
 .login .form .log,
@@ -90,15 +146,47 @@ a {
   text-align: center;
 }
 
-/* product */
-.addproduct .form .legend {
+.form .legend {
   display: grid;
   grid-template-columns: 1fr 2fr;
   margin-bottom: 10px;
-  /* align-self: center; */
 }
 
 .legend div,
 .legend a {
   align-self: center;
+}
+
+.status {
+  display: grid;
+  align-items: center;
+  justify-content: start;
+  grid-template-columns: 1fr 5fr 1fr 5fr;
+}
+
+.active,
+.inactive {
+  height: 13px;
+  width: 13px;
+  border-radius: 7px;
+}
+
+.active {
+  background-color: green;
+}
+
+.inactive {
+  background-color: red;
+}
+
+.second {
+  margin-top:100px;
+}
+
+.jwt {
+  margin-top:20px;
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  font-size: 10px;
+  color:#c3c3c3;
 }

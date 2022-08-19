@@ -1,42 +1,37 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import useFirebaseAuth from "../auth/FirebaseAuth";
+import { AppContextInterface } from "./interfaces";
 
-
-const builderContext = (user:UserInterface, loading: boolean) : AppContextInterface => {
+const builderContext = (ctx: AppContextInterface) : AppContextInterface => {
   return {
-    user : user,
-    loading : loading
+    user : ctx.user,
+    loading : ctx.loading,
+    meli: ctx.meli,
+    setMeli: ctx.setMeli
   }
 }
 
-const AppDefaultContext = builderContext({ uid: '', name: '', email: ''}, false);
+// Initial Context
+const AppContextDefault = builderContext({user : null, loading :false, meli: null, setMeli: () => {} });
 
-export const AppContext = createContext<AppContextInterface>(AppDefaultContext);
+export const AppContext = createContext<AppContextInterface>(AppContextDefault);
 
 
-// Provider in your app
-
-// function EnthusasticGreeting() {
-//   const currentUser = useContext(currentUserContext);
-//   return <div>HELLO {currentUser.uid.toUpperCase()}!</div>;
-// }
-
-// function App() {
-//   return (
-//     <currentUserContext.Provider value="Anders">
-//       <EnthusasticGreeting />
-//     </currentUserContext.Provider>
-//   );
-// }
-
+export function useContextApp() {
+  return useContext(AppContext);
+}
 interface AppProviderInteface {
   children: JSX.Element;
 }
 
 export function AppProvider(props: AppProviderInteface) {
+
   const {user,loading} = useFirebaseAuth();
+  const [meli, setMeli]= useState('')
+  const appContextDefault = builderContext({user:user, loading:loading, meli:meli, setMeli: setMeli});
+
   return (
-    <AppContext.Provider value={builderContext(user, loading)}>
+    <AppContext.Provider value={appContextDefault}>
       {props.children}
     </AppContext.Provider>
   );
