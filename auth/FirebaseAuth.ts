@@ -1,7 +1,7 @@
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { app } from "./FirebaseConfig"
 import { useState } from 'react'
-import { UserInterface } from "../lib/interfaces";
+import { UserInterface } from "../interfaces/core";
 
 export default function useFirebaseAuth() {
 

@@ -1,24 +1,43 @@
 
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import Grant from "../components/Grant";
-import Publish from "../components/Publish";
-import Token from "../components/Token";
+import { useContext,  useState } from "react";
 import { parseGrant } from "../helper/Helpers";
 import { AppContext } from "../lib/AppContext";
+
+import Grant from "../components/Grant";
+import Profile from "../components/Profile";
+import Orders from "../components/Orders";
+import Publish from "../components/Publish";
+import Token from "../components/Token";
+import Item from "../components/Item";
 
 
 const MercadoLibre = () => {
 
-    const [publish, setPublish] = useState(false)
+    enum OPTIONS {
+        none,
+        profile,
+        orders,
+        publish,
+        item
+    }
 
-    const ctx = useContext(AppContext);
+    const [option, setOption] = useState(OPTIONS.none)
+    const [item, setItem] = useState('')
+
+    const context = useContext(AppContext);
 
     const router = useRouter()
     const { code } = router.query
     const grant = parseGrant(code);
 
     console.log('mercadolibre ' + grant);
+
+    const selectItem = (id:string) => {
+        console.log('item selected='+id)
+        setItem(id);
+        setOption(OPTIONS.item)
+    }
     
     return (
         <>
@@ -30,19 +49,28 @@ const MercadoLibre = () => {
                             <Grant 
                                 grant={grant} 
                                 getGrant={()=>{}} />
-                            <Token 
+                            <Token
+                                jwt={context.meli} 
                                 grant={grant} 
-                                saveToken={ctx.setMeli} />
+                                saveToken={context.setMeli} />
                         </div>
                     </div>
                     <div className="form second">
-                        <button onClick={() => setPublish(!publish)}>Publish Product</button>
-                        <button onClick={() => setPublish(!publish)}>Search Product</button>
+                        <button onClick={() => setOption(OPTIONS.profile)}>Profile</button>
+                        <button onClick={() => setOption(OPTIONS.orders)}>Orders</button>
+                        <button onClick={() => setOption(OPTIONS.publish)}>Publish</button>
                     </div>
                 </div>
-                <div className="options">
-                    { publish && <Publish />} 
-                </div>
+                { 
+                    context.meli &&
+                        <div className="options">
+                            { option == OPTIONS.publish && <Publish />} 
+                            { option == OPTIONS.orders && <Orders select={selectItem} />} 
+                            { option == OPTIONS.profile && <Profile />} 
+                            { option == OPTIONS.item && <Item item_id={item}/>} 
+                        </div>
+                }
+
             </div>
         </>
 

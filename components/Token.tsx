@@ -1,21 +1,14 @@
-import { isReactNative } from '@firebase/util'
 import React, { useEffect, useState } from 'react'
+import { jwt } from '../interfaces/meli'
 import Status from './Status'
 
 interface TokenInterface {
     grant:string,
-    saveToken:(jwt:string)=>void
+    jwt:jwt | null,
+    saveToken:(jwt:jwt)=>void
 }
 
-interface JWTInterface {
-    access_token: string
-    expires_in: number
-    scope: string
-    token_type: string
-    user_id: number
-}
-
-const JWTDefault: JWTInterface = {
+const JWTDefault: jwt = {
     access_token: '',
     expires_in: 0,
     scope: '',
@@ -26,10 +19,10 @@ const JWTDefault: JWTInterface = {
 const Token = (props:TokenInterface) => {
 
     const [loading, setLoading] = useState(false);
-    const [jwt, setJwt] = useState<JWTInterface>(JWTDefault)
+    const [jwt, setJwt] = useState<jwt>(JWTDefault)
     const [error, setError] = useState('');
 
-    const getToken = () => {
+    const getAPI = () => {
 
         console.log('looking forward for a token');
         if (props.grant == '') {
@@ -46,16 +39,16 @@ const Token = (props:TokenInterface) => {
             .finally(()=>setLoading(false));
     }
 
-    const tokenSucess = (data: JWTInterface | string) => {
+    const tokenSucess = (data: jwt | string) => {
         if(typeof data !== "string") {
-            props.saveToken(data.access_token);
+            props.saveToken(data);
             console.log(data.access_token);
             setJwt(data);
         } else
             setError(data);
     }
 
-    useEffect(() => getToken(), []);
+    useEffect(() => getAPI(), []);
 
     const isActive = () => (jwt.access_token !== '')
 
@@ -68,14 +61,14 @@ const Token = (props:TokenInterface) => {
                 loading={loading}
                 isActive={isActive()} 
                 actionTitle={'Refrescar'} 
-                actionExecute={getToken} />
+                actionExecute={getAPI} />
 
             {
                 (jwt.access_token !== '') &&
                     <div className='jwt'>
-                        <label>user:</label><div>{jwt.user_id}</div>
-                        <label>jwt:</label><div>{jwt.access_token?.substring(1,40)}</div>
-                        <label>expire:</label><div>{jwt.expires_in}</div>
+                        <div>{jwt.user_id}</div>
+                        <div>{jwt.access_token}</div>
+                        <div>{jwt.expires_in}</div>
                         <span></span> { isError() && <label>{error}</label> }
                     </div>
             }

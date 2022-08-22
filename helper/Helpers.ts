@@ -11,3 +11,7 @@ export function getGrant() : string {
 export function parseGrant(code : string | string [] | undefined) : string {
     return  (typeof(code) == "string")?code:"";
 }
+
+export function parseParam(param : string | string [] | undefined) : string {
+    return  (typeof(param) == "string")?param:"";
+}

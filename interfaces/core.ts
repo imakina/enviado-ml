@@ -1,3 +1,5 @@
+import { jwt } from "./meli";
+
 interface AppProviderInteface {
     children: JSX.Element;
 }
@@ -5,8 +7,8 @@ interface AppProviderInteface {
 export interface AppContextInterface {
     user: UserInterface | null,
     loading: boolean,
-    meli: string | null,
-    setMeli: (token:string) => void
+    meli: jwt | null,
+    setMeli: (token:jwt) => void
 }
 
 export interface UserInterface  {

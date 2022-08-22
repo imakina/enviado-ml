@@ -6,10 +6,25 @@ body {
   font-family: 'Nunito', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
+  font-size: 100%;
+  box-sizing: border-box;
+  
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  min-height: 100vh;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 a,
-button {
+button,
+input,
+label {
   font-family: 'Nunito', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
@@ -24,6 +39,19 @@ a {
   box-sizing: border-box;
 }
 
+:root {
+  --green: #04AA6D;
+  --gray: #bbbbbb;
+  --white: white;
+  --ligth-gray: #e3e3e3;
+  --yellow: #fff159;
+  --red: red;
+
+  --padding: 15px;
+  --header: 65px;
+
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: white;
@@ -34,38 +62,77 @@ a {
   }
 }
 
+table {
+  border: 0.5px solid var(--gray);
+}
+
+table thead th {
+  background-color: var(--gray);
+  color: white;
+}
+
+table td,
+table th {
+  padding: 5px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
 .header {
   display: grid;
-  border-bottom: 1px solid #e3e3e3;
-  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--ligth-gray);
+
+  /* align-content: space-evenly; */
+  background-color: var(--greyapple);
+  grid-auto-flow: column;
+  place-items: center;
 }
 
-.header .image {
-  height: 60px;
-}
-/*
+.header .image,
+.header .brand {
+  background-color: var(--green);
 
-*/
-/* .header .user {
+  cursor: pointer;
+  justify-self: left;
+  padding-right: var(--padding);
+  padding-left: var(--padding);
+
   display: grid;
-  grid-template-columns: repeat(2, auto);
-  justify-content: end;
-} */
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  place-items: center;
+  height: var(--header);
+  font-size: 30px;
+  color:var(--ligth-gray);
+  column-gap: 15px;
+}
 
 .header .nav {
   display: grid;
-  /* grid-column: 2/5; */
-  grid-template-columns: repeat(6, auto);
-  justify-content: end;
+  grid-auto-columns: minmax(min-content, auto);
+  grid-auto-flow: column;
+  grid-gap: 1px;
+  place-items: center;
+  justify-self: right;
+  padding-right: var(--padding);
 }
 
 .header .nav a {
-  padding: 20px;
   border: 1px solid transparent;
+  transition: .3s all ease-in-out;
+
+  height: var(--header);
+  display: grid;
+  align-content: center;
+  padding-left: var(--padding);
+  padding-right: var(--padding);
 }
+
 .header .nav a:hover {
-  background-color: #eae8e8;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  background-color: var(--ligth-gray);
+  transition: color 0.3s ease, border-color 0.3s ease;
   cursor: hand !important;
 }
 
@@ -89,7 +156,7 @@ a {
   display: grid;
   align-content: center;
   justify-content: end;
-  background-color: #fff159;
+  background-color: var(--yellow);
   padding-right: 40px;
   padding-top: 100px;
   padding-bottom: 100px;
@@ -103,6 +170,14 @@ a {
   width: 100%;
 }
 
+.big {
+  width: 70vw !important;
+}
+
+.medium {
+  width: 40vw !important;
+}
+
 .form {
   display: grid;
   grid-template-rows: auto;
@@ -111,7 +186,7 @@ a {
 
 .form input {
   padding: 10px;
-  border: 0.5px solid #c3c3c3;
+  border: 0.5px solid var(--gray);
 }
 
 .form input,
@@ -131,13 +206,13 @@ a {
 }
 
 .form button {
-  border-color: #04AA6D;
-  color: green;
+  border-color: var(--green);
+  color: var(--green);
 }
 
 .form button:hover {
-  background-color: #04AA6D;
-  color: white;
+  background-color: var(--green);
+  color: var(--white);
 }
 
 .login .form .log,
@@ -172,11 +247,11 @@ a {
 }
 
 .active {
-  background-color: green;
+  background-color: var(--green);
 }
 
 .inactive {
-  background-color: red;
+  background-color: var(--red);
 }
 
 .second {
@@ -186,7 +261,54 @@ a {
 .jwt {
   margin-top:20px;
   display: grid;
-  grid-template-columns: 1fr 6fr;
-  font-size: 10px;
   color:#c3c3c3;
+}
+
+.home {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.json {
+  overflow: auto;
+  max-height: 300px;
+}
+
+.json pre {
+  background-color: var(--gray);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.columns .label {
+  text-align: center;
+}
+
+.columns .label.selected {
+  background-color: var(--ligth-gray);
+  cursor: pointer;
+}
+.columns .label.selected:hover {
+  background-color: var(--green);
+  color:var(--white);
+  border:0.5px solid var(--ligth-gray)
+}
+
+.columns .label,
+.columns .value {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.columns .value {
+  padding-left: 10px;
+  border-bottom: 1px solid var(--gray);
 }

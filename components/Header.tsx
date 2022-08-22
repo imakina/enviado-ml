@@ -1,8 +1,8 @@
 
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext } from 'react'
 import { AppContext } from '../lib/AppContext';
-import { useContextApp } from '../lib/AppProvider';
 
 const Header = () => {
 
@@ -12,8 +12,11 @@ const Header = () => {
 
     return (
         <div className='header'>
-            <div className='image'>
-                <img src={'/logo-green.png'} width={60} height={60} alt="logo"></img>
+            <div className='brand'>
+                <>
+                    <Image src={'/logo.png'} width={60} height={60} alt="logo"></Image>
+                    <div>enviado.com ME1</div>
+                </>
             </div>
             <div className="nav">
                 <Link href={'/'}>Home</Link>

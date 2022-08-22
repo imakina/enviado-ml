@@ -3,7 +3,7 @@
 // import { AppContextInterface } from "./interfaces";
 
 import { createContext, useContext } from "react";
-import { AppContextInterface } from "./interfaces";
+import { AppContextInterface } from "../interfaces/core";
 
 const builderContext = (ctx: AppContextInterface) : AppContextInterface => {
   return {
