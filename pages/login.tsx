@@ -1,12 +1,15 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { AppContext } from "../lib/AppContext";
 
 export default function Login() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [log, setLog] = useState("")
+
+    const {user} = useContext(AppContext);
 
     function authenticate() {
 
@@ -28,11 +31,16 @@ export default function Login() {
         <>
             <div className="login">
                 <div className="form">
-                    <div className="title">Enviado-ML</div>
-                    <input type="text" placeholder="username" onChange={(e) => setUsername(e.currentTarget.value)}></input>
-                    <input type="text" placeholder="password" onChange={(e) => setPassword(e.currentTarget.value)}></input>
-                    <div className="log">{log}</div>
-                    <button onClick={authenticate}>Log In</button>
+                    <h2>Enviado-ML</h2>
+                    {
+                        user?.email == '' &&
+                        <>
+                            <input type="text" placeholder="username" onChange={(e) => setUsername(e.currentTarget.value)}></input>
+                            <input type="password" placeholder="password" onChange={(e) => setPassword(e.currentTarget.value)}></input>
+                            <button onClick={authenticate}>Log In</button>
+                        </>
+                    }
+                    <p className="log">{log}</p>
                     <div className="link"><Link href={'/'}>Home</Link></div>
                 </div>
             </div>

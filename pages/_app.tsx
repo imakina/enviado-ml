@@ -27,14 +27,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     // console.log('useeffect de auth')
     // console.log('meli='+meli)
     const unsubscribe = auth.onAuthStateChanged((_user) => {
-      console.log('unsuscribe de auth')
+      
       if (_user) {
+        console.log('unsuscribe de auth' + _user.email)
         setUser({
           uid:_user.uid,
           name:_user.displayName??'',
           email:_user.email??'',
         });
-      }
+      } else 
+      console.log('unsuscribe de auth none')
     });
 
     return unsubscribe;

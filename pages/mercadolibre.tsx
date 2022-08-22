@@ -62,7 +62,7 @@ const MercadoLibre = () => {
                     </div>
                 </div>
                 { 
-                    context.meli &&
+                    context.meli?.access_token !== '' &&
                         <div className="options">
                             { option == OPTIONS.publish && <Publish />} 
                             { option == OPTIONS.orders && <Orders select={selectItem} />} 

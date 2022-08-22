@@ -1,4 +1,5 @@
 
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext } from 'react'
@@ -6,26 +7,25 @@ import { AppContext } from '../lib/AppContext';
 
 const Header = () => {
 
-    const value = useContext(AppContext);
-    //const { user, meli } = useContextApp();
-    const ml = 'https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=5342048874344752&redirect_uri=http://localhost:3000/mercadolibre&state='+(new Date).getTimezoneOffset();
-
+    const {user} = useContext(AppContext);
+    const ml = 'https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id='+process.env.NEXT_PUBLIC_ML_CLIENT_ID+'&redirect_uri='+process.env.NEXT_PUBLIC_ML_CLIENT_REDIRECT_URI+'&state='+(new Date).getTimezoneOffset();
+    //console.log(ml)
     return (
         <div className='header'>
+            <Head>
+                <title>enviado-ml</title>
+            </Head>
             <div className='brand'>
                 <>
-                    <Image src={'/logo.png'} width={60} height={60} alt="logo"></Image>
-                    <div>enviado.com ME1</div>
+                    <Image src={'/logo.png'} width={50} height={50} alt="logo"></Image>
                 </>
             </div>
             <div className="nav">
-                <Link href={'/'}>Home</Link>
-                <Link href={'demo'}>Demo</Link>
-                <Link href={ml}>Mercado Libre</Link>
-
-                { value.user ?
+                { user?.email ?
                     <>
-                        <Link href={'logout'}>{value.user.email}</Link>
+                        <Link href={'/'}>Home</Link>
+                        <Link href={ml}>Mercado Libre</Link>
+                        <Link href={'logout'}>{user.email}</Link>
                     </>
                 :
                     <>
@@ -40,3 +40,11 @@ const Header = () => {
 }
 
 export default Header
+
+// export async function getStaticProps() {
+//     const db = await myDB.connect({
+//       host: process.env.DB_HOST,
+//       username: process.env.DB_USER,
+//       password: process.env.DB_PASS,
+//     })
+// }

@@ -1,5 +1,6 @@
-import { auth } from "firebase-admin";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+
+// import { auth } from '../auth/FirebaseConfig';
+import { getAuth, signOut } from "firebase/auth";
 import Link from "next/link";
 import { useEffect, useState } from "react"
 
@@ -11,10 +12,10 @@ export default function Login() {
 
         setLog("");
         const auth = getAuth();
-
+        //debugger;
         signOut(auth)
-            .then(() => {
-                setLog(" Logout ");
+            .then((data) => {
+                setLog(" Logout Successfull");
             })
             .catch((error) => {
                 setLog(error.message);
@@ -30,7 +31,7 @@ export default function Login() {
             <div className="login">
                 <div className="form">
                     <div className="log">
-                        <div>{log}</div>
+                        <p>{log}</p>
                         <Link href={'/'}>Volver a EML</Link>
                     </div>
                 </div>
