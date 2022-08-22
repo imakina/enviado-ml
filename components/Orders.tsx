@@ -35,6 +35,7 @@ const Orders = (props: OrdersInterface) => {
     const items = (id:string,idx:number) => {
         return (
             <Columns
+                key={idx}
                 value={id}
                 label={`# ${(idx+1).toString()}`} 
                 selected={props.select}></Columns>

@@ -11,12 +11,18 @@ const Grant = (props:GrantInterface) => {
     const isActive = () => (props.grant !== '');
 
     return (
-        <Status 
-            label={'Usuario de MELI'}
-            loading={false}
-            isActive={isActive()} 
-            actionTitle={'Autenticar'} 
-            actionExecute={props.getGrant} />
+        <>
+            <div className="access-codes">
+                <span>Grant={props.grant}</span>
+            </div>
+
+            <Status 
+                label={'User'}
+                loading={false}
+                isActive={isActive()} 
+                actionTitle={'Autenticar'} 
+                actionExecute={props.getGrant} />
+        </>
     )
 }
 

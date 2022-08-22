@@ -44,6 +44,7 @@ a {
   --gray: #bbbbbb;
   --white: white;
   --ligth-gray: #e3e3e3;
+  --dark-gray:#838282;
   --yellow: #fff159;
   --red: red;
 
@@ -142,7 +143,7 @@ ul {
 .addproduct,
 .mercadolibre {
   display: grid;
-  height: 95vh;
+  height: 90vh;
   align-content: center;
   justify-content: center;
 }
@@ -158,8 +159,9 @@ ul {
   justify-content: end;
   background-color: var(--yellow);
   padding-right: 40px;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  /* padding-top: 100px;
+  padding-bottom: 100px; */
+  height: 90vh;
 }
 
 .mercadolibre .options {
@@ -232,11 +234,17 @@ ul {
   align-self: center;
 }
 
+.quotes {
+  padding-bottom: 5px;
+  font-size: 14px;
+  color:rgb(60, 60, 60)
+}
+
 .status {
   display: grid;
   align-items: center;
   justify-content: start;
-  grid-template-columns: 1fr 5fr 1fr 5fr;
+  grid-template-columns: 1fr 2fr 2fr 5fr;
 }
 
 .active,
@@ -255,13 +263,18 @@ ul {
 }
 
 .second {
-  margin-top:100px;
+  margin-top:50px;
 }
 
-.jwt {
-  margin-top:20px;
+.access-codes {
+  font-size: 14px;
   display: grid;
-  color:#c3c3c3;
+  color:var(--dark-gray);
+  border: 0.5px solid var(--gray);
+  /* margin-top: 3px; */
+  margin-bottom: 10px;
+  padding: 7px;
+  border-radius: 5px;
 }
 
 .home {

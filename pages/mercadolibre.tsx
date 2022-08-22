@@ -31,7 +31,7 @@ const MercadoLibre = () => {
     const { code } = router.query
     const grant = parseGrant(code);
 
-    console.log('mercadolibre ' + grant);
+    console.log('mercadolibre grant=' + grant);
 
     const selectItem = (id:string) => {
         console.log('item selected='+id)
@@ -42,34 +42,32 @@ const MercadoLibre = () => {
     return (
         <>
             <div className="mercadolibre">
+
                 <div className="menu">
+                <h2>MercadoLibre Envios </h2>
                     <div className="form">
-                        <h2>MercadoLibre Envios </h2>
-                        <div className="states">
-                            <Grant 
-                                grant={grant} 
-                                getGrant={()=>{}} />
-                            <Token
-                                jwt={context.meli} 
-                                grant={grant} 
-                                saveToken={context.setMeli} />
-                        </div>
+                        <h3>Autenticacion</h3>
+                        <Grant grant={grant} getGrant={()=>{}} />
+                        <Token grant={grant} />
                     </div>
                     <div className="form second">
+                        <h3>Operations </h3>
                         <button onClick={() => setOption(OPTIONS.profile)}>Profile</button>
                         <button onClick={() => setOption(OPTIONS.orders)}>Orders</button>
                         <button onClick={() => setOption(OPTIONS.publish)}>Publish</button>
                     </div>
                 </div>
+                <div className="options">
                 { 
-                    context.meli?.access_token !== '' &&
-                        <div className="options">
-                            { option == OPTIONS.publish && <Publish />} 
-                            { option == OPTIONS.orders && <Orders select={selectItem} />} 
-                            { option == OPTIONS.profile && <Profile />} 
-                            { option == OPTIONS.item && <Item item_id={item}/>} 
-                        </div>
+                    (context.meli?.access_token !== '') &&
+                        <>
+                            {option == OPTIONS.publish && <Publish /> }
+                            {option == OPTIONS.orders && <Orders select={selectItem} />}
+                            {option == OPTIONS.profile && <Profile />}
+                            {option == OPTIONS.item && <Item item_id={item}/>}
+                        </>  
                 }
+                </div>
 
             </div>
         </>

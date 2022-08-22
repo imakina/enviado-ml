@@ -1,26 +1,29 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { jwt } from '../interfaces/meli'
+import { AppContext } from '../lib/AppContext'
 import Status from './Status'
 
 interface TokenInterface {
     grant:string,
-    jwt:jwt | null,
-    saveToken:(jwt:jwt)=>void
+    // jwt:jwt | null,
+    // saveToken:(jwt:jwt)=>void
 }
 
-const JWTDefault: jwt = {
-    access_token: '',
-    expires_in: 0,
-    scope: '',
-    token_type: '',
-    user_id: 0
-}
+// const JWTDefault: jwt = {
+//     access_token: '',
+//     expires_in: 0,
+//     scope: '',
+//     token_type: '',
+//     user_id: 0
+// }
 
 const Token = (props:TokenInterface) => {
 
     const [loading, setLoading] = useState(false);
-    const [jwt, setJwt] = useState<jwt>(JWTDefault)
+    //const [jwt, setJwt] = useState<jwt>(JWTDefault)
     const [error, setError] = useState('');
+
+    const {meli, setMeli} = useContext(AppContext);
 
     const getAPI = useCallback((grant:string) => {
 
@@ -36,9 +39,9 @@ const Token = (props:TokenInterface) => {
             .then((res) => res.json())
             .then((data)=> {
                 if(typeof data !== "string") {
-                    props.saveToken(data);
+                    setMeli(data);
                     console.log(data.access_token);
-                    setJwt(data);
+                    //setJwt(data);
                 } else
                     setError(data);
             })
@@ -57,12 +60,21 @@ const Token = (props:TokenInterface) => {
 
     useEffect(() => getAPI(props.grant), [getAPI]);
 
-    const isActive = () => (jwt.access_token !== '')
+    const isActive = () => (meli?.access_token !== '')
 
     const isError = () => (error !== '' && !isActive())
 
     return (
         <>
+            {
+                (meli?.access_token !== '') &&
+                    <div className='access-codes'>
+                        <div>UserID={meli?.user_id}</div>
+                        <div>AccessToken={meli?.access_token}</div>
+                        <div>ExpireTime={meli?.expires_in}</div>
+                        <span></span> { isError() && <label>{error}</label> }
+                    </div>
+            }
             <Status 
                 label={'Token'}
                 loading={loading}
@@ -70,15 +82,7 @@ const Token = (props:TokenInterface) => {
                 actionTitle={'Refrescar'} 
                 actionExecute={()=>getAPI(props.grant)} />
 
-            {
-                (jwt.access_token !== '') &&
-                    <div className='jwt'>
-                        <div>{jwt.user_id}</div>
-                        <div>{jwt.access_token}</div>
-                        <div>{jwt.expires_in}</div>
-                        <span></span> { isError() && <label>{error}</label> }
-                    </div>
-            }
+
         </>
     )
 }

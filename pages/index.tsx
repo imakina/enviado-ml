@@ -11,7 +11,7 @@ const Home: NextPage = () => {
           <div>Los siguientes son usuarios estan disponibles para publicar productos de prueba, 
             tienen caducidad de 7 dias desde el 18-08
           </div>
-          <p>
+          <div>
             <table className='table'>
               <thead>
                 <tr><th>user</th><th>password</th></tr>
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
               <li>Si el estado no esta en verde, obtener un token valido presionando refrescar</li>
               <li>Si ambos estan verde, puede consultar los servicios, publicar un articulo, revisar ordenes, etc</li>
             </ul>
-          </p>
+          </div>
         </div>
 
     </div>
