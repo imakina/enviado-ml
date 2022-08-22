@@ -35,7 +35,7 @@ const Token = (props:TokenInterface) => {
         
         setLoading(true);
 
-        fetch('/api/meli/token/' + grant)
+        fetch('/api/meli/token?code=' + grant)
             .then((res) => res.json())
             .then((data)=> {
                 console.log(data);
