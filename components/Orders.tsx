@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { jwt, Orders } from '../interfaces/meli';
+import { AuthInterface } from '../interfaces/core';
+import { Orders } from '../interfaces/meli';
 import { AppContext } from '../lib/AppContext';
 import Columns from './Columns';
 
@@ -9,16 +10,16 @@ interface OrdersInterface {
 
 const Orders = (props: OrdersInterface) => {
     
-    const { meli } = useContext(AppContext);
+    const {authz, setAuthz} = useContext(AppContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [data, setData] = useState<Orders | null>(null);
     
     useEffect(() => {
         
-        const getAPI = (meli:jwt | null) => {
+        const getAPI = (authz:AuthInterface) => {
 
-            fetch('/api/meli/orders?token=' + meli?.access_token +'&id=' + meli?.user_id)
+            fetch('/api/meli/orders?token=' + authz?.access_token +'&id=' + authz?.user_id)
                 .then((res) => res.json())
                 .then((data)=> setData(data))
                 .catch((e)=>setError('Error obteniendo la data ' + e))
@@ -26,7 +27,7 @@ const Orders = (props: OrdersInterface) => {
         
         }
 
-        getAPI(meli)
+        getAPI(authz)
 
     }, []);
     

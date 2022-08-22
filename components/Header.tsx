@@ -24,7 +24,7 @@ const Header = () => {
                 { user?.email ?
                     <>
                         <Link href={'/'}>Home</Link>
-                        <Link href={ml}>Mercado Libre</Link>
+                        <Link href={ml}>MercadoLibre</Link>
                         <Link href={'logout'}>{user.email}</Link>
                     </>
                 :

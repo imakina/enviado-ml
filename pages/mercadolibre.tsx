@@ -25,7 +25,7 @@ const MercadoLibre = () => {
     const [option, setOption] = useState(OPTIONS.none)
     const [item, setItem] = useState('')
 
-    const context = useContext(AppContext);
+    const {authz} = useContext(AppContext);
 
     const router = useRouter()
     const { code } = router.query
@@ -59,7 +59,7 @@ const MercadoLibre = () => {
                 </div>
                 <div className="options">
                 { 
-                    (context.meli?.access_token !== '') &&
+                    (authz?.access_token !== '') &&
                         <>
                             {option == OPTIONS.publish && <Publish /> }
                             {option == OPTIONS.orders && <Orders select={selectItem} />}

@@ -1,12 +1,8 @@
 import Image from 'next/image';
 import React, { useContext, useState } from 'react'
-import { jwt, Publish, requestItemPOST as requestItem } from '../interfaces/meli';
+import { Publish, requestItemPOST as requestItem } from '../interfaces/meli';
 import { AppContext } from '../lib/AppContext';
 import Columns from './Columns';
-
-interface publishInterface {
-    jwt: jwt
-}
 
 const Publish = () => {
     
@@ -66,7 +62,7 @@ const Publish = () => {
         body.price = price;
         body.pictures = [{source:picture}]
 
-        fetch('/api/meli/publish?token=' + meli ?? '', {
+        fetch('/api/meli/publish?token=' + meli?.access_token ?? '', {
             method : 'POST',
             body : JSON.stringify(body)
         })

@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { jwt, Profile } from '../interfaces/meli';
+import { AuthInterface } from '../interfaces/core';
+import { Profile } from '../interfaces/meli';
 import { AppContext } from '../lib/AppContext';
 import Columns from './Columns';
 
 
 const Profile = () => {
     
-    const { meli } = useContext(AppContext);
+    const {authz} = useContext(AppContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [data, setData] = useState<Profile | null>(null);
 
     useEffect(() => {
         
-        const getAPI = (meli:jwt | null) => {
+        const getAPI = (authz:AuthInterface) => {
 
-            fetch('/api/meli/profile?token=' + meli?.access_token)
+            fetch('/api/meli/profile?token=' + authz?.access_token)
                 .then((res) => res.json())
                 .then((data)=>setData(data.profile))
                 .catch((e)=>setError('Error obteniendo la info del vendedor ' + e))
@@ -23,7 +24,7 @@ const Profile = () => {
         
         }
 
-        getAPI(meli)
+        getAPI(authz)
 
     }, []);
 

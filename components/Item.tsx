@@ -26,7 +26,7 @@ const defaultItem:requestItemPUT = {
 
 const Item = (props:ItemInterface) => {
     
-    const { meli } = useContext(AppContext);
+    const {authz, setAuthz} = useContext(AppContext);
     
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -39,7 +39,7 @@ const Item = (props:ItemInterface) => {
     const [price, setPrice] = useState('350');
     const [link, setLink] = useState('');
 
-    const url = '/api/meli/item?token=' + (meli?.access_token ?? '') + '&item='+props.item_id;
+    const url = '/api/meli/item?token=' + (authz?.access_token ?? '') + '&item='+props.item_id;
 
     const putAPI = () => {
 

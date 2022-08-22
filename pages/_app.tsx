@@ -4,8 +4,7 @@ import { AppContext } from '../lib/AppContext'
 import Layout from '../components/Layout'
 import { useEffect, useState } from 'react';
 import { auth } from '../auth/FirebaseConfig';
-import { UserInterface } from '../interfaces/core';
-import { jwt } from '../interfaces/meli';
+import { UserInterface, AuthInterface } from '../interfaces/core';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -15,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     email: '' 
   });
 
-  const [meli, setMeli] = useState<jwt>({ 
+  const [authz, setAuthz] = useState<AuthInterface>({ 
     access_token: '',
     expires_in: 0,
     scope: '',
@@ -46,8 +45,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   const appContextDefault = {
       user:user, 
       loading:false, 
-      meli:meli, 
-      setMeli: setMeli
+      authz:authz, 
+      setAuthz: setAuthz
     };
 
   return (

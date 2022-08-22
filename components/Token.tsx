@@ -1,29 +1,15 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { jwt } from '../interfaces/meli'
 import { AppContext } from '../lib/AppContext'
 import Status from './Status'
-
 interface TokenInterface {
     grant:string,
-    // jwt:jwt | null,
-    // saveToken:(jwt:jwt)=>void
 }
-
-// const JWTDefault: jwt = {
-//     access_token: '',
-//     expires_in: 0,
-//     scope: '',
-//     token_type: '',
-//     user_id: 0
-// }
 
 const Token = (props:TokenInterface) => {
 
     const [loading, setLoading] = useState(false);
-    //const [jwt, setJwt] = useState<jwt>(JWTDefault)
     const [error, setError] = useState('');
-
-    const {meli, setMeli} = useContext(AppContext);
+    const {authz, setAuthz} = useContext(AppContext);
 
     const getAPI = useCallback((grant:string) => {
 
@@ -38,9 +24,8 @@ const Token = (props:TokenInterface) => {
         fetch('/api/meli/token?code=' + grant)
             .then((res) => res.json())
             .then((data)=> {
-                console.log(data);
                 if(data.access_token)
-                    setMeli(data);
+                    setAuthz(data);
                 else
                     setError(data);
             })
@@ -50,29 +35,26 @@ const Token = (props:TokenInterface) => {
 
     useEffect(() => getAPI(props.grant), [getAPI]);
 
-    const isActive = () => (meli?.access_token !== '')
-
-    const isError = () => (error !== '' && !isActive())
+    const isError = () => (error !== '')
 
     return (
         <>
             {
-                (meli?.access_token !== '') &&
+                (authz.access_token !== '') &&
                     <div className='access-codes'>
-                        <div>UserID={meli?.user_id}</div>
-                        <div>AccessToken={meli?.access_token}</div>
-                        <div>ExpireTime={meli?.expires_in}</div>
-                        <span></span> { isError() && <label>{error}</label> }
+                        <div>UserID={authz?.user_id}</div>
+                        <div>AccessToken={authz?.access_token}</div>
+                        <div>ExpireTime={authz?.expires_in}</div>
+                        { isError() && <label>{error}</label> }
                     </div>
             }
             <Status 
                 label={'Token'}
                 loading={loading}
-                isActive={isActive()} 
+                isActive={authz.access_token !== ''} 
                 actionTitle={'Refrescar'} 
                 actionExecute={()=>getAPI(props.grant)} />
-
-
+                
         </>
     )
 }
