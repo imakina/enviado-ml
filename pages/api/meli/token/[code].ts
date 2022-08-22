@@ -29,7 +29,7 @@ export default function handler(
             if (json.access_token)
                 res.status(200).json(json);
             else {
-                res.status(400).json(json)
+                res.status(400).json({...json, grant:body})
             }
                 
         })

@@ -38,25 +38,15 @@ const Token = (props:TokenInterface) => {
         fetch('/api/meli/token/' + grant)
             .then((res) => res.json())
             .then((data)=> {
-                if(typeof data !== "string") {
+                console.log(data);
+                if(data.access_token)
                     setMeli(data);
-                    console.log(data.access_token);
-                    //setJwt(data);
-                } else
+                else
                     setError(data);
             })
             .catch((e)=>setError('Error obteniendo el token ' + e))
             .finally(()=>setLoading(false));
     }, []);
-
-    // const tokenSucess = (data: jwt | string) => {
-    //     if(typeof data !== "string") {
-    //         props.saveToken(data);
-    //         console.log(data.access_token);
-    //         setJwt(data);
-    //     } else
-    //         setError(data);
-    // }
 
     useEffect(() => getAPI(props.grant), [getAPI]);
 
