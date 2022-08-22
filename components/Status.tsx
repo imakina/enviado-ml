@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 interface StatusInterface {
@@ -14,7 +15,7 @@ const Status = (props:StatusInterface) => {
     <div className='status'>
         <div className={props.isActive?'active':'inactive'}>&nbsp;</div>
         <div>{ props.label }</div>
-        <div>{ props.loading && <span><img src={'loading.svg'} alt='loading' width={60} height={60} /> </span>}</div>
+        <div>{ props.loading && <span><Image src={'loading.svg'} alt='loading' width={60} height={60} /> </span>}</div>
         <button onClick={props.actionExecute}>{props.actionTitle}</button>
     </div>
   )

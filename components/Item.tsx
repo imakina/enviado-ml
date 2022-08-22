@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { requestItemPUT } from '../interfaces/meli';
 import { AppContext } from '../lib/AppContext';
 
@@ -72,7 +72,7 @@ const Item = (props:ItemInterface) => {
 
     }
 
-    const getAPI = () => {
+    const getAPI = useCallback((url:string) => {
 
         fetch(url, { method : 'GET' })
         .then((res) => res.json())
@@ -89,10 +89,10 @@ const Item = (props:ItemInterface) => {
         .catch((e)=>setError('Error obteniendo la info del item ' + e))
         .finally(()=>setLoading(false));
 
-    }
+    }, [])
 
     // retrieve the item from ML
-    useEffect(() => getAPI(), []);
+    useEffect(() => getAPI(url), [getAPI]);
     
     const close = () => setData(defaultItem);
     

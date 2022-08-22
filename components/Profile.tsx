@@ -10,18 +10,24 @@ const Profile = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [data, setData] = useState<Profile | null>(null);
-    
-    const getToken = () => {
 
-        fetch('/api/meli/profile?token=' + meli?.access_token)
-            .then((res) => res.json())
-            .then((data)=>setData(data.profile))
-            .catch((e)=>setError('Error obteniendo la info del vendedor ' + e))
-            .finally(()=>setLoading(false));
-    }
+    useEffect(() => {
+        
+        const getAPI = (meli:jwt | null) => {
 
-    useEffect(() => getToken(), []);
-    
+            fetch('/api/meli/profile?token=' + meli?.access_token)
+                .then((res) => res.json())
+                .then((data)=>setData(data.profile))
+                .catch((e)=>setError('Error obteniendo la info del vendedor ' + e))
+                .finally(()=>setLoading(false));
+        
+        }
+
+        getAPI(meli)
+
+    }, []);
+
+
     if (error) return <div>Error</div>
 
     return (

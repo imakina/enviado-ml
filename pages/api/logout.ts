@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unsetAuthCookies } from 'next-firebase-auth'
-import initAuth from '../../auth/InitAuth' // the module you created above
+// import initAuth from '../../auth/InitAuth' // the module you created above
 
-initAuth()
+// initAuth()
 
 type Data = {
   message: string

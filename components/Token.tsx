@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { jwt } from '../interfaces/meli'
 import Status from './Status'
 
@@ -22,33 +22,40 @@ const Token = (props:TokenInterface) => {
     const [jwt, setJwt] = useState<jwt>(JWTDefault)
     const [error, setError] = useState('');
 
-    const getAPI = () => {
+    const getAPI = useCallback((grant:string) => {
 
         console.log('looking forward for a token');
-        if (props.grant == '') {
+        if (grant == '') {
             console.log('without grant');
             return;
         }
         
         setLoading(true);
 
-        fetch('/api/meli/token/' + props.grant)
+        fetch('/api/meli/token/' + grant)
             .then((res) => res.json())
-            .then(tokenSucess)
+            .then((data)=> {
+                if(typeof data !== "string") {
+                    props.saveToken(data);
+                    console.log(data.access_token);
+                    setJwt(data);
+                } else
+                    setError(data);
+            })
             .catch((e)=>setError('Error obteniendo el token ' + e))
             .finally(()=>setLoading(false));
-    }
+    }, []);
 
-    const tokenSucess = (data: jwt | string) => {
-        if(typeof data !== "string") {
-            props.saveToken(data);
-            console.log(data.access_token);
-            setJwt(data);
-        } else
-            setError(data);
-    }
+    // const tokenSucess = (data: jwt | string) => {
+    //     if(typeof data !== "string") {
+    //         props.saveToken(data);
+    //         console.log(data.access_token);
+    //         setJwt(data);
+    //     } else
+    //         setError(data);
+    // }
 
-    useEffect(() => getAPI(), []);
+    useEffect(() => getAPI(props.grant), [getAPI]);
 
     const isActive = () => (jwt.access_token !== '')
 
@@ -61,7 +68,7 @@ const Token = (props:TokenInterface) => {
                 loading={loading}
                 isActive={isActive()} 
                 actionTitle={'Refrescar'} 
-                actionExecute={getAPI} />
+                actionExecute={()=>getAPI(props.grant)} />
 
             {
                 (jwt.access_token !== '') &&

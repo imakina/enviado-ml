@@ -24,16 +24,15 @@ function MyApp({ Component, pageProps }: AppProps) {
    });
   
   useEffect(() => {
-    console.log('useeffect de auth')
-    console.log('meli='+meli)
+    // console.log('useeffect de auth')
+    // console.log('meli='+meli)
     const unsubscribe = auth.onAuthStateChanged((_user) => {
       console.log('unsuscribe de auth')
       if (_user) {
-        const current = {..._user}
         setUser({
-          uid:current.uid,
-          name:current.displayName??'',
-          email:current.email??'',
+          uid:_user.uid,
+          name:_user.displayName??'',
+          email:_user.email??'',
         });
       }
     });

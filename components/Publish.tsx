@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useContext, useState } from 'react'
 import { jwt, Publish, requestItemPOST as requestItem } from '../interfaces/meli';
 import { AppContext } from '../lib/AppContext';
@@ -100,7 +101,7 @@ const Publish = () => {
                     data &&
                         <>
                             <h3>Published OK #{data.id}</h3>
-                            <img src={data.secure_thumbnail} width={300} height={300}></img>
+                            <Image alt="thumbnail" src={data.secure_thumbnail} width={300} height={300}></Image>
                             <a href={data.permalink} target="_blank" rel="noopener noreferrer">Open Article</a>
                             {/* <Columns label="Date Created" value={data.date_created ? data.date_created.toDateString() : ''}></Columns> */} 
                             <Columns label="Status" value={data.status}></Columns>

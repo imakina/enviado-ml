@@ -14,16 +14,21 @@ const Orders = (props: OrdersInterface) => {
     const [error, setError] = useState('');
     const [data, setData] = useState<Orders | null>(null);
     
-    const getAPI = () => {
+    useEffect(() => {
+        
+        const getAPI = (meli:jwt | null) => {
 
-        fetch('/api/meli/orders?token=' + meli?.access_token +'&id=' + meli?.user_id)
-            .then((res) => res.json())
-            .then((data)=> setData(data))
-            .catch((e)=>setError('Error obteniendo la data ' + e))
-            .finally(()=>setLoading(false));
-    }
+            fetch('/api/meli/orders?token=' + meli?.access_token +'&id=' + meli?.user_id)
+                .then((res) => res.json())
+                .then((data)=> setData(data))
+                .catch((e)=>setError('Error obteniendo la data ' + e))
+                .finally(()=>setLoading(false));
+        
+        }
 
-    useEffect(() => getAPI(), []);
+        getAPI(meli)
+
+    }, []);
     
     if (error) return <div>Error</div>
 
