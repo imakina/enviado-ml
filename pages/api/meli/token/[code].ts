@@ -28,8 +28,10 @@ export default function handler(
         .then((json) => {
             if (json.access_token)
                 res.status(200).json(json);
-            else
-                res.status(400).json(json.message)
+            else {
+                res.status(400).json(json)
+            }
+                
         })
         .catch((err) => res.status(500).json(err))
 
