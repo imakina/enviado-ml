@@ -41,7 +41,7 @@ export default function Login() {
                         </>
                     }
                     <p className="log">{log}</p>
-                    <div className="link"><Link href={'/'}>Home</Link></div>
+                    <div className="link"><Link href={'/'}>Go Home</Link></div>
                 </div>
             </div>
         </>
