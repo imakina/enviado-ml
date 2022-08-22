@@ -84,6 +84,8 @@ jobs:
           envkey_NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY }}
           envkey_NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
           envkey_NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          envkey_NEXT_PUBLIC_ML_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_ML_CLIENT_ID }}
+          envkey_NEXT_PUBLIC_ML_CLIENT_REDIRECT_URI: ${{ secrets.NEXT_PUBLIC_ML_CLIENT_REDIRECT_URI }}
           file_name: .env
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
