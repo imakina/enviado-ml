@@ -14,7 +14,7 @@ const Profile = () => {
 
     useEffect(() => {
         
-        const getAPI = (authz:AuthInterface) => {
+        const getAPI = (authz:AuthInterface | null) => {
 
             fetch('/api/meli/profile?token=' + authz?.access_token)
                 .then((res) => res.json())

@@ -40,7 +40,7 @@ const Token = (props:TokenInterface) => {
     return (
         <>
             {
-                (authz.access_token !== '') &&
+                (authz?.access_token !== '') &&
                     <div className='access-codes'>
                         <div>UserID={authz?.user_id}</div>
                         <div>AccessToken={authz?.access_token}</div>
@@ -51,7 +51,7 @@ const Token = (props:TokenInterface) => {
             <Status 
                 label={'Token'}
                 loading={loading}
-                isActive={authz.access_token !== ''} 
+                isActive={authz?.access_token !== ''} 
                 actionTitle={'Refrescar'} 
                 actionExecute={()=>getAPI(props.grant)} />
                 

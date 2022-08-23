@@ -17,7 +17,7 @@ const Orders = (props: OrdersInterface) => {
     
     useEffect(() => {
         
-        const getAPI = (authz:AuthInterface) => {
+        const getAPI = (authz:AuthInterface | null) => {
 
             fetch('/api/meli/orders?token=' + authz?.access_token +'&id=' + authz?.user_id)
                 .then((res) => res.json())
