@@ -2,12 +2,12 @@ interface AppProviderInteface {
     children: JSX.Element;
 }
 
-// export interface AppContextInterface {
-//     user: UserInterface | null,
-//     loading: boolean,
-//     authorization: AuthorizationInterface | null,
-//     setMeli: (token:AuthorizationInterface) => void
-// }
+export interface AppContextInterface {
+    user: UserInterface | null,
+    loading: boolean,
+    authz: AuthInterface | null,
+    setAuthz: (token:AuthInterface) => void
+}
 
 export interface UserInterface  {
     uid: string,

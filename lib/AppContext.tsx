@@ -9,13 +9,13 @@ const builderContext = (ctx: AppContextInterface) : AppContextInterface => {
   return {
     user : ctx.user,
     loading : ctx.loading,
-    meli: ctx.meli,
-    setMeli: ctx.setMeli
+    authz: ctx.authz,
+    setAuthz: ctx.setAuthz
   }
 }
 
 // // Initial Context
-const AppContextDefault = builderContext({user : null, loading :false, meli: null, setMeli: () => {} });
+const AppContextDefault = builderContext({user : null, loading :false, authz: null, setAuthz: () => {} });
 
 export const AppContext = createContext<AppContextInterface>(AppContextDefault);
 
