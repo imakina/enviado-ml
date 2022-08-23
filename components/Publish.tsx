@@ -6,7 +6,7 @@ import Columns from './Columns';
 
 const Publish = () => {
     
-    const { meli } = useContext(AppContext);
+    const {authz} = useContext(AppContext);
     
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -62,7 +62,7 @@ const Publish = () => {
         body.price = price;
         body.pictures = [{source:picture}]
 
-        fetch('/api/meli/publish?token=' + meli?.access_token ?? '', {
+        fetch('/api/meli/publish?token=' + authz?.access_token ?? '', {
             method : 'POST',
             body : JSON.stringify(body)
         })
@@ -76,8 +76,6 @@ const Publish = () => {
     const close = () => setData(null);
     
     if (error) return <div>Error</div>
-
-    debugger;
     
     return (
         <div className='profile'>
